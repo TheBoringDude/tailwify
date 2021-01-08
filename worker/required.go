@@ -38,21 +38,21 @@ func (w *Worker) checkApps() {
 }
 
 func (w *Worker) checkNode() {
-	installSpinner = spinner.New("Checking for Node installation...")
-	installSpinner.Start()
+	w.installSpinner = spinner.New("Checking for Node installation...")
+	w.installSpinner.Start()
 
 	// check for node install
 	if check := utils.CheckRequiredInstalled(nodeApps[0]["command"], nodeApps[0]["command-args"]); check {
-		installSpinner.Success("Node is installed")
+		w.installSpinner.Success("Node is installed")
 	} else {
-		installSpinner.Error("Please install NODE in order to use this CLI!")
+		w.installSpinner.Error("Please install NODE in order to use this CLI!")
 
 		// exit if Node is not installed
 		os.Exit(0)
 	}
 
-	installSpinner = spinner.New("Checking for installed package manager...")
-	installSpinner.Start()
+	w.installSpinner = spinner.New("Checking for installed package manager...")
+	w.installSpinner.Start()
 
 	// installed package manager
 	pkger := ""
@@ -70,14 +70,14 @@ func (w *Worker) checkNode() {
 	// show error and stop the app
 	// if yarn / npm is not installed
 	if pkger == "" {
-		installSpinner.Error("No `package manager` installed. Please install NPM or Yarn and try again.")
+		w.installSpinner.Error("No `package manager` installed. Please install NPM or Yarn and try again.")
 
 		// exit the app
 		os.Exit(0)
 	}
 
 	// show success on verify
-	installSpinner.Successf("Using `%s` for installing...", pkger)
+	w.installSpinner.Successf("Using `%s` for installing...", pkger)
 
 	// set the nodejs pkg manager
 	w.jsPkger = strings.ToLower(pkger)

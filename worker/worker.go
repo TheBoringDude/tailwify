@@ -11,17 +11,17 @@ import (
 
 // Worker => main handler for all apps
 type Worker struct {
-	AppType     string
-	ProjectName string
-	JsApp       bool
-	jsPkger     string
-	PhpApp      bool
-	BasicApp    bool
-	projectDir  string
-	wdPath      string
+	AppType        string
+	ProjectName    string
+	JsApp          bool
+	jsPkger        string
+	PhpApp         bool
+	BasicApp       bool
+	projectDir     string
+	wdPath         string
+	installSpinner *spinner.Spinner
+	appConfig      *mainConfigApp
 }
-
-var installSpinner = spinner.New()
 
 // getPath will get the current working directory
 func (w *Worker) getPath() {
@@ -47,6 +47,12 @@ func (w *Worker) Start() {
 
 	// for nextjs
 	if w.AppType == "next" {
+		// set the installer
+		// the app will then use the configurations
+		// that this will return
+		w.appConfig = w.newNextJs()
+
+		// run the main installer
 		w.runNextJs()
 	}
 
