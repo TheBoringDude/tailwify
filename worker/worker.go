@@ -51,6 +51,11 @@ func (w *Worker) Start() {
 		// the app will then use the configurations
 		// that this will return
 		w.appConfig = w.newNextJs()
+	} else if w.AppType == "gatsby" {
+		// set the installer
+		// the app will then use the configurations
+		// that this will return
+		w.appConfig = w.newGatsbyJs()
 	}
 
 	// run the main installer worker

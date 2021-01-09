@@ -80,7 +80,7 @@ func (w *Worker) modify() {
 	}
 
 	// write new `tailwind.css`
-	w.writer(path.Join(w.projectDir, w.appConfig.tailwindPath), tailwindCSS)
+	w.tailwindWriter()
 
 	// LOOP INTO THE FILES TO BE REMOVED
 	for _, v := range w.appConfig.remove {
@@ -95,7 +95,19 @@ func (w *Worker) modify() {
 	// LOOP INTO THE FILES TO BE CREATED IF THERE IS
 	if len(w.appConfig.otherFiles) > 0 {
 		for _, o := range w.appConfig.otherFiles {
-			w.writer(o.filename, o.content)
+			w.writer(path.Join(w.projectDir, o.filename), o.content)
 		}
 	}
+}
+
+// adds or creates `tailwind.css` to the given path
+func (w *Worker) tailwindWriter() {
+	splts := strings.Split(w.appConfig.tailwindPath, "/")
+	folders := splts[:len(splts)-1]
+
+	if err := os.MkdirAll(path.Join(w.projectDir, strings.Join(folders[:], "/")), 0755); err != nil {
+		log.Fatalf("\nThere was a problem trying to create `%s`. Please create it your own, .. ", w.appConfig.tailwindPath)
+	}
+
+	w.writer(path.Join(w.projectDir, w.appConfig.tailwindPath), tailwindCSS)
 }

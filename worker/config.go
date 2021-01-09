@@ -105,3 +105,53 @@ func (w *Worker) newNextJs() *mainConfigApp {
 
 	return app
 }
+
+// FOR GATSBY.JS
+func (w *Worker) newGatsbyJs() *mainConfigApp {
+	app := &mainConfigApp{
+		id:      "gatsby",
+		name:    "GatsbyJS",
+		apptype: "js",
+		installer: []appInstaller{
+			{
+				pkgManager:        "npm",
+				pkgManagerCommand: []string{"install"},
+				pkgInstaller:      "gatsby",
+				pkgInstArgs:       []string{"new"},
+			},
+		},
+		afterCreateInstall: false,
+		requiredPackages:   []string{"gatsby-plugin-postcss", "tailwindcss@latest", "postcss@latest", "autoprefixer@latest"},
+		modify: []appModifier{
+			{
+				filename: "tailwind.config.js",
+				replaceContent: []modifyReplace{
+					{
+						textString:    "purge: [],",
+						replaceString: "purge: ['./src/**/*.{js,jsx,ts,tsx}'],",
+					},
+				},
+			},
+			{
+				filename: "gatsby-config.js",
+				replaceContent: []modifyReplace{
+					{
+						textString:    "plugins: [],",
+						replaceString: "plugins: ['gatsby-plugin-postcss'],",
+					},
+				},
+			},
+		},
+		remove:                []appFileRemover{},
+		tailwindPath:          "src/styles/tailwind.css",
+		tailwindConfigInstall: []string{"tailwindcss", "init", "-p"},
+		otherFiles: []additionalFiles{
+			{
+				filename: "gatsby-browser.js",
+				content:  `import './src/styles/global.css';`,
+			},
+		},
+	}
+
+	return app
+}

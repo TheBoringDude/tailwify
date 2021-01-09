@@ -76,6 +76,12 @@ func (w *Worker) checkNode() {
 		os.Exit(0)
 	}
 
+	// override package manager for other frameworks
+	// use NPM for gatsby, .. it defaults with it though
+	if w.AppType == "gatsby" {
+		pkger = "NPM"
+	}
+
 	// show success on verify
 	w.installSpinner.Successf("Using `%s` for installing...", pkger)
 
