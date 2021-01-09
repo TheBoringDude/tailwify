@@ -17,11 +17,12 @@ const tailwindCSS = `@tailwind base;
 @tailwind components;
 @tailwind utilities;`
 
+// functions to add minimal tailwind config
 func (w *Worker) addTailwindMinimalConfig() {
 	// configure
 	// this will create minimal
 	// tailwind.config.js and postcss.config.js
-	cmd := exec.Command("npx", "tailwindcss", "init", "-p")
+	cmd := exec.Command("npx", w.appConfig.tailwindConfigInstall...)
 	cmd.Dir = w.projectDir
 
 	// run
@@ -31,14 +32,13 @@ func (w *Worker) addTailwindMinimalConfig() {
 	}
 }
 
-// main handler for modifying files ...
+// just a spinner container
 func (w *Worker) fileModifier() {
 	w.installSpinner = spinner.New("Configuring TailwindCSS")
 	w.installSpinner.Start()
 
-	if w.AppType == "next" {
-		w.modifyNextJs()
-	}
+	// modify files
+	w.modify()
 
 	// show success message
 	w.installSpinner.Success("Succesfully configured TailwindCSS!")
@@ -51,8 +51,13 @@ func (w *Worker) writer(filename, content string) {
 	}
 }
 
-// FOR NEXT.JS
-func (w *Worker) modifyNextJs() {
+// main function that modifies other files
+// => replace strings
+// => remove unnecessary files
+// => creates tailwind config files
+// => writes new `tailwind.css`
+// => creates additional files
+func (w *Worker) modify() {
 	// create config files
 	w.addTailwindMinimalConfig()
 
@@ -64,14 +69,18 @@ func (w *Worker) modifyNextJs() {
 			w.installSpinner.Errorf("Error trying to modify `%s`. Please modify it on your own...\n", i.filename)
 		}
 
-		content := strings.Replace(string(fileBytes), i.replaceContent.textString, i.replaceContent.replaceString, 1)
+		// replace each set strings tp be replaced
+		var content string
+		for _, r := range i.replaceContent {
+			content = strings.Replace(string(fileBytes), r.textString, r.replaceString, 1)
+		}
 
 		// write files
 		w.writer(filename, content)
 	}
 
 	// write new `tailwind.css`
-	w.writer(path.Join(w.projectDir, "styles/tailwind.css"), tailwindCSS)
+	w.writer(path.Join(w.projectDir, w.appConfig.tailwindPath), tailwindCSS)
 
 	// LOOP INTO THE FILES TO BE REMOVED
 	for _, v := range w.appConfig.remove {
@@ -80,6 +89,13 @@ func (w *Worker) modifyNextJs() {
 			if err := os.Remove(path.Join(w.projectDir, v.folder, file)); err != nil {
 				w.installSpinner.Errorf("Error trying to remove `%s`. You can try to remove it on your own...\n", file)
 			}
+		}
+	}
+
+	// LOOP INTO THE FILES TO BE CREATED IF THERE IS
+	if len(w.appConfig.otherFiles) > 0 {
+		for _, o := range w.appConfig.otherFiles {
+			w.writer(o.filename, o.content)
 		}
 	}
 }

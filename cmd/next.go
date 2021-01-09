@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"strings"
+
 	"github.com/TheBoringDude/tailwify/worker"
 	"github.com/spf13/cobra"
 )
@@ -13,7 +15,7 @@ var nextCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		generate := &worker.Worker{
 			AppType:     "next",
-			ProjectName: projectName,
+			ProjectName: strings.ToLower(projectName), // npm & yarn doesn't allow having caps in project names
 			JsApp:       true,
 		}
 

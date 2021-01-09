@@ -24,8 +24,8 @@ func init() {
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	generateCmd.PersistentFlags().StringVarP(&projectName, "project-name", "p", "", "Your projectname or directory (do not add spaces) (required)")
-	generateCmd.MarkFlagRequired("project-dir")
+	generateCmd.PersistentFlags().StringVarP(&projectName, "project", "p", "", "Your projectname or directory (do not add spaces & do not use uppercase) (required)")
+	generateCmd.MarkFlagRequired("project")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:

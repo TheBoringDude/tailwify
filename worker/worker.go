@@ -51,10 +51,10 @@ func (w *Worker) Start() {
 		// the app will then use the configurations
 		// that this will return
 		w.appConfig = w.newNextJs()
-
-		// run the main installer
-		w.runNextJs()
 	}
+
+	// run the main installer worker
+	w.run()
 
 	// show success message
 	fmt.Printf("\n  Your project `%s` has been succesfully configured at '%s' \n=> Feel free to modify it again at your own cost... | TheBoringDude\n", w.ProjectName, w.projectDir)

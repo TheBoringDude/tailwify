@@ -35,10 +35,10 @@ func (w *Worker) checkNodePackager() (string, []string) {
 	return nodePkger, newArgs
 }
 
-// MAIN NEXT.JS RUNNER SCRIPT
-func (w *Worker) runNextJs() {
+// MAIN HANDLER FOR EVERYTHING
+func (w *Worker) run() {
 	// start install
-	w.installSpinner = spinner.New("Installing NextJS")
+	w.installSpinner = spinner.New("Installing " + w.appConfig.name)
 	w.installSpinner.Start()
 
 	// run the app installer //
@@ -46,16 +46,16 @@ func (w *Worker) runNextJs() {
 	cmd := exec.Command(cmdCommand, cmdArg...)
 	err := cmd.Run()
 	if err != nil {
-		w.installSpinner.Error("There was a problem while trying to install NextJS")
+		w.installSpinner.Error("There was a problem while trying to install " + w.appConfig.name)
 		log.Fatal(err)
 	}
 
 	// this will run on success
-	w.installSpinner.Success("Succesfully installed NextJS")
+	w.installSpinner.Success("Succesfully installed " + w.appConfig.name)
 
 	// install tailwind
-	w.installTailwindNextJs()
+	w.installTailwind()
 
 	// configure and modify files
-	w.modifyNextJs()
+	w.fileModifier()
 }

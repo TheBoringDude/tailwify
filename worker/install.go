@@ -7,6 +7,7 @@ import (
 	"github.com/leaanthony/spinner"
 )
 
+// argument generator and handler / fixer
 func (w *Worker) tailwindNodeArgs() []string {
 	var nodePkgerCommand []string
 
@@ -24,7 +25,11 @@ func (w *Worker) tailwindNodeArgs() []string {
 	return newArgs
 }
 
-func (w *Worker) installTailwindNextJs() {
+// main tailwindcss installer
+// it installs tailwind, postcss, autoprefixer atmost
+// it also includes other required packages
+// depending on each frameworks
+func (w *Worker) installTailwind() {
 	w.installSpinner = spinner.New("Installing TailwindCSS and other required libraries...")
 	w.installSpinner.Start()
 

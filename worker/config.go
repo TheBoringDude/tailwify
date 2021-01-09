@@ -2,13 +2,17 @@ package worker
 
 // main installer configurator
 type mainConfigApp struct {
-	id               string
-	name             string
-	apptype          string
-	installer        []appInstaller
-	requiredPackages []string
-	modify           []appModifier
-	remove           []appFileRemover
+	id                    string
+	name                  string
+	apptype               string
+	installer             []appInstaller
+	afterCreateInstall    []appNodeAfterInstall
+	requiredPackages      []string
+	modify                []appModifier
+	remove                []appFileRemover
+	tailwindPath          string
+	tailwindConfigInstall []string
+	otherFiles            []additionalFiles
 }
 
 // for node package management
@@ -19,10 +23,21 @@ type appInstaller struct {
 	pkgInstArgs       []string
 }
 
+// after the `create-`
+type appNodeAfterInstall struct {
+	commandArgs []string
+}
+
+// additional files to be added
+type additionalFiles struct {
+	filename string
+	content  string
+}
+
 // files to be modified
 type appModifier struct {
 	filename       string
-	replaceContent modifyReplace
+	replaceContent []modifyReplace
 }
 type modifyReplace struct {
 	textString    string
@@ -55,20 +70,25 @@ func (w *Worker) newNextJs() *mainConfigApp {
 				pkgInstArgs:       []string{"create", "next-app"},
 			},
 		},
-		requiredPackages: []string{"tailwindcss@latest", "postcss@latest", "autoprefixer@latest"},
+		afterCreateInstall: []appNodeAfterInstall{},
+		requiredPackages:   []string{"tailwindcss@latest", "postcss@latest", "autoprefixer@latest"},
 		modify: []appModifier{
 			{
 				filename: "tailwind.config.js",
-				replaceContent: modifyReplace{
-					textString:    "purge: [],",
-					replaceString: "purge: ['./pages/**/*.js', './components/**/*.js'],",
+				replaceContent: []modifyReplace{
+					{
+						textString:    "purge: [],",
+						replaceString: "purge: ['./pages/**/*.js', './components/**/*.js'],",
+					},
 				},
 			},
 			{
 				filename: "pages/_app.js",
-				replaceContent: modifyReplace{
-					textString:    "../styles/globals.css",
-					replaceString: "../styles/tailwind.css",
+				replaceContent: []modifyReplace{
+					{
+						textString:    "../styles/globals.css",
+						replaceString: "../styles/tailwind.css",
+					},
 				},
 			},
 		},
@@ -78,6 +98,9 @@ func (w *Worker) newNextJs() *mainConfigApp {
 				files:  []string{"Home.module.css", "globals.css"},
 			},
 		},
+		tailwindPath:          "styles/tailwind.css",
+		tailwindConfigInstall: []string{"tailwindcss", "init", "-p"},
+		otherFiles:            []additionalFiles{},
 	}
 
 	return app
