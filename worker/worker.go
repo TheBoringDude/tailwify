@@ -37,6 +37,12 @@ func (w *Worker) getPath() {
 
 // Start starts generating the template
 func (w *Worker) Start() {
+	// check if projectName is blank or not
+	if w.ProjectName == "" {
+		fmt.Println("\n  Please set a ProjectName by using the `-p` flag...")
+		os.Exit(0)
+	}
+
 	// set first the paths
 	w.getPath()
 
@@ -56,6 +62,11 @@ func (w *Worker) Start() {
 		// the app will then use the configurations
 		// that this will return
 		w.appConfig = w.newGatsbyJs()
+	} else if w.AppType == "vite-vue3" {
+		// set the installer
+		// the app will then use the configurations
+		// that this will return
+		w.appConfig = w.newViteApp()
 	}
 
 	// run the main installer worker

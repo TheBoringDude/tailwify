@@ -52,7 +52,7 @@ type appFileRemover struct {
 
 // FOR NEXT.JS
 func (w *Worker) newNextJs() *mainConfigApp {
-	app := &mainConfigApp{
+	return &mainConfigApp{
 		id:      "next",
 		name:    "NextJS",
 		apptype: "js",
@@ -102,13 +102,11 @@ func (w *Worker) newNextJs() *mainConfigApp {
 		tailwindConfigInstall: []string{"tailwindcss", "init", "-p"},
 		otherFiles:            []additionalFiles{},
 	}
-
-	return app
 }
 
 // FOR GATSBY.JS
 func (w *Worker) newGatsbyJs() *mainConfigApp {
-	app := &mainConfigApp{
+	return &mainConfigApp{
 		id:      "gatsby",
 		name:    "GatsbyJS",
 		apptype: "js",
@@ -152,6 +150,58 @@ func (w *Worker) newGatsbyJs() *mainConfigApp {
 			},
 		},
 	}
+}
 
-	return app
+// FOR VUE3 (CREATE-VITE-APP)
+func (w *Worker) newViteApp() *mainConfigApp {
+	return &mainConfigApp{
+		id:      "vite-vue3",
+		name:    "Vue3 w/ Vite",
+		apptype: "js",
+		installer: []appInstaller{
+			{
+				pkgManager:        "npm",
+				pkgManagerCommand: []string{"install"},
+				pkgInstaller:      "npx",
+				pkgInstArgs:       []string{"create-vite-app"},
+			},
+			{
+				pkgManager:        "yarn",
+				pkgManagerCommand: []string{"add"},
+				pkgInstaller:      "yarn",
+				pkgInstArgs:       []string{"create", "vite-app"},
+			},
+		},
+		afterCreateInstall: true,
+		requiredPackages:   []string{"-D", "tailwindcss@npm:@tailwindcss/postcss7-compat", "@tailwindcss/postcss7-compat", "postcss@^7", "autoprefixer@^9"},
+		modify: []appModifier{
+			{
+				filename: "tailwind.config.js",
+				replaceContent: []modifyReplace{
+					{
+						textString:    "purge: [],",
+						replaceString: "purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],",
+					},
+				},
+			},
+			{
+				filename: "src/main.js",
+				replaceContent: []modifyReplace{
+					{
+						textString:    "./index.css",
+						replaceString: "./tailwind.css",
+					},
+				},
+			},
+		},
+		remove: []appFileRemover{
+			{
+				folder: "src",
+				files:  []string{"index.css"},
+			},
+		},
+		tailwindPath:          "src/tailwind.css",
+		tailwindConfigInstall: []string{"tailwindcss", "init", "-p"},
+		otherFiles:            []additionalFiles{},
+	}
 }

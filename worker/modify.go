@@ -109,5 +109,12 @@ func (w *Worker) tailwindWriter() {
 		log.Fatalf("\nThere was a problem trying to create `%s`. Please create it your own, .. ", w.appConfig.tailwindPath)
 	}
 
-	w.writer(path.Join(w.projectDir, w.appConfig.tailwindPath), tailwindCSS)
+	twContent := tailwindCSS
+
+	// for vite-vue3
+	if w.AppType == "vite-vue3" {
+		twContent = "/*! @import */\n" + tailwindCSS
+	}
+
+	w.writer(path.Join(w.projectDir, w.appConfig.tailwindPath), twContent)
 }

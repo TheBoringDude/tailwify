@@ -7,14 +7,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// gatsbyCmd represents the gatsby command
-var gatsbyCmd = &cobra.Command{
-	Use:   "gatsby",
-	Short: "Gatsby.js App",
-	Long:  `Configure and setup a Gatsby.js APP`,
+// viteVue3Cmd represents the viteVue3 command
+var viteVue3Cmd = &cobra.Command{
+	Use:   "viteVue3",
+	Short: "Vue3 APP w/ Vite",
+	Long:  `Configure and setup a Vue3 APP with Vite`,
 	Run: func(cmd *cobra.Command, args []string) {
 		generate := &worker.Worker{
-			AppType:     "gatsby",
+			AppType:     "vite-vue3",
 			ProjectName: strings.ToLower(projectName), // npm & yarn doesn't allow having caps in project names
 			JsApp:       true,
 		}
@@ -25,15 +25,15 @@ var gatsbyCmd = &cobra.Command{
 }
 
 func init() {
-	generateCmd.AddCommand(gatsbyCmd)
+	generateCmd.AddCommand(viteVue3Cmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// gatsbyCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// viteVue3Cmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// gatsbyCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// viteVue3Cmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
