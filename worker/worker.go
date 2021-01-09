@@ -6,6 +6,7 @@ import (
 	"os"
 	"path"
 
+	"github.com/TheBoringDude/tailwify/config"
 	"github.com/leaanthony/spinner"
 )
 
@@ -20,7 +21,7 @@ type Worker struct {
 	projectDir     string
 	wdPath         string
 	installSpinner *spinner.Spinner
-	appConfig      *mainConfigApp
+	appConfig      *config.MainConfigApp
 }
 
 // getPath will get the current working directory
@@ -49,25 +50,8 @@ func (w *Worker) Start() {
 	// then, check for the required apps
 	w.checkApps()
 
-	// run specific generators
-
-	// for nextjs
-	if w.AppType == "next" {
-		// set the installer
-		// the app will then use the configurations
-		// that this will return
-		w.appConfig = w.newNextJs()
-	} else if w.AppType == "gatsby" {
-		// set the installer
-		// the app will then use the configurations
-		// that this will return
-		w.appConfig = w.newGatsbyJs()
-	} else if w.AppType == "vite-vue3" {
-		// set the installer
-		// the app will then use the configurations
-		// that this will return
-		w.appConfig = w.newViteApp()
-	}
+	// SET THE CONFIG APPCONFIG TO BE USED
+	w.appConfig = config.Configurator(w.AppType)
 
 	// run the main installer worker
 	w.run()

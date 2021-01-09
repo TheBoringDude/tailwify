@@ -22,7 +22,7 @@ func (w *Worker) addTailwindMinimalConfig() {
 	// configure
 	// this will create minimal
 	// tailwind.config.js and postcss.config.js
-	cmd := exec.Command("npx", w.appConfig.tailwindConfigInstall...)
+	cmd := exec.Command("npx", w.appConfig.Tailwindconfiginstall...)
 	cmd.Dir = w.projectDir
 
 	// run
@@ -62,17 +62,17 @@ func (w *Worker) modify() {
 	w.addTailwindMinimalConfig()
 
 	// LOOP INTO THE FILES TO BE MODIFIED
-	for _, i := range w.appConfig.modify {
-		filename := path.Join(w.projectDir, i.filename)
+	for _, i := range w.appConfig.Modify {
+		filename := path.Join(w.projectDir, i.Filename)
 		fileBytes, err := ioutil.ReadFile(filename)
 		if err != nil {
-			w.installSpinner.Errorf("Error trying to modify `%s`. Please modify it on your own...\n", i.filename)
+			w.installSpinner.Errorf("Error trying to modify `%s`. Please modify it on your own...\n", i.Filename)
 		}
 
 		// replace each set strings tp be replaced
 		var content string
-		for _, r := range i.replaceContent {
-			content = strings.Replace(string(fileBytes), r.textString, r.replaceString, 1)
+		for _, r := range i.Replacecontent {
+			content = strings.Replace(string(fileBytes), r.Textstring, r.Replacestring, 1)
 		}
 
 		// write files
@@ -83,30 +83,30 @@ func (w *Worker) modify() {
 	w.tailwindWriter()
 
 	// LOOP INTO THE FILES TO BE REMOVED
-	for _, v := range w.appConfig.remove {
-		for _, file := range v.files {
+	for _, v := range w.appConfig.Remove {
+		for _, file := range v.Files {
 			// remove each
-			if err := os.Remove(path.Join(w.projectDir, v.folder, file)); err != nil {
+			if err := os.Remove(path.Join(w.projectDir, v.Folder, file)); err != nil {
 				w.installSpinner.Errorf("Error trying to remove `%s`. You can try to remove it on your own...\n", file)
 			}
 		}
 	}
 
 	// LOOP INTO THE FILES TO BE CREATED IF THERE IS
-	if len(w.appConfig.otherFiles) > 0 {
-		for _, o := range w.appConfig.otherFiles {
-			w.writer(path.Join(w.projectDir, o.filename), o.content)
+	if len(w.appConfig.Otherfiles) > 0 {
+		for _, o := range w.appConfig.Otherfiles {
+			w.writer(path.Join(w.projectDir, o.Filename), o.Content)
 		}
 	}
 }
 
 // adds or creates `tailwind.css` to the given path
 func (w *Worker) tailwindWriter() {
-	splts := strings.Split(w.appConfig.tailwindPath, "/")
+	splts := strings.Split(w.appConfig.Tailwindpath, "/")
 	folders := splts[:len(splts)-1]
 
 	if err := os.MkdirAll(path.Join(w.projectDir, strings.Join(folders[:], "/")), 0755); err != nil {
-		log.Fatalf("\nThere was a problem trying to create `%s`. Please create it your own, .. ", w.appConfig.tailwindPath)
+		log.Fatalf("\nThere was a problem trying to create `%s`. Please create it your own, .. ", w.appConfig.Tailwindpath)
 	}
 
 	twContent := tailwindCSS
@@ -116,5 +116,5 @@ func (w *Worker) tailwindWriter() {
 		twContent = "/*! @import */\n" + tailwindCSS
 	}
 
-	w.writer(path.Join(w.projectDir, w.appConfig.tailwindPath), twContent)
+	w.writer(path.Join(w.projectDir, w.appConfig.Tailwindpath), twContent)
 }

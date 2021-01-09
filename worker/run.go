@@ -14,10 +14,10 @@ func (w *Worker) checkNodePackager() (string, []string) {
 	var nodePkgerCommand []string
 
 	// just loop in the package managers
-	for _, p := range w.appConfig.installer {
-		if p.pkgManager == w.jsPkger {
-			nodePkger = p.pkgInstaller
-			nodePkgerCommand = p.pkgInstArgs
+	for _, p := range w.appConfig.Installer {
+		if p.Pkgmanager == w.jsPkger {
+			nodePkger = p.Pkginstaller
+			nodePkgerCommand = p.Pkginstargs
 
 			break
 		}
@@ -38,25 +38,25 @@ func (w *Worker) checkNodePackager() (string, []string) {
 // MAIN HANDLER FOR EVERYTHING
 func (w *Worker) run() {
 	// start install
-	w.installSpinner = spinner.New("Installing " + w.appConfig.name)
+	w.installSpinner = spinner.New("Installing " + w.appConfig.Name)
 	w.installSpinner.Start()
 
 	// run the app installer //
 	cmdCommand, cmdArg := w.checkNodePackager()
 	cmd := exec.Command(cmdCommand, cmdArg...)
 	if err := cmd.Run(); err != nil {
-		w.installSpinner.Error("There was a problem while trying to install " + w.appConfig.name)
+		w.installSpinner.Error("There was a problem while trying to install " + w.appConfig.Name)
 		log.Fatal(err)
 	}
 
 	// after create-
 	// if needed
-	if w.appConfig.afterCreateInstall {
+	if w.appConfig.Aftercreateinstall {
 		w.afterInstall()
 	}
 
 	// show success message
-	w.installSpinner.Success("Succesfully installed " + w.appConfig.name)
+	w.installSpinner.Success("Succesfully installed " + w.appConfig.Name)
 
 	// install tailwind
 	w.installTailwind()
@@ -75,7 +75,7 @@ func (w *Worker) afterInstall() {
 
 	// install it
 	if err := cmd.Run(); err != nil {
-		w.installSpinner.Error("There was a problem while trying to install " + w.appConfig.name)
+		w.installSpinner.Error("There was a problem while trying to install " + w.appConfig.Name)
 		log.Fatal(err)
 	}
 }
