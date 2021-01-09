@@ -44,13 +44,18 @@ func (w *Worker) run() {
 	// run the app installer //
 	cmdCommand, cmdArg := w.checkNodePackager()
 	cmd := exec.Command(cmdCommand, cmdArg...)
-	err := cmd.Run()
-	if err != nil {
+	if err := cmd.Run(); err != nil {
 		w.installSpinner.Error("There was a problem while trying to install " + w.appConfig.name)
 		log.Fatal(err)
 	}
 
-	// this will run on success
+	// after create-
+	// if needed
+	if w.appConfig.afterCreateInstall {
+		w.afterInstall()
+	}
+
+	// show success message
 	w.installSpinner.Success("Succesfully installed " + w.appConfig.name)
 
 	// install tailwind
@@ -58,4 +63,19 @@ func (w *Worker) run() {
 
 	// configure and modify files
 	w.fileModifier()
+}
+
+// after install function
+// after the create- something, if there is
+// some of the frameworks, do not automatically install it
+// like, .. having `npm install`  after
+func (w *Worker) afterInstall() {
+	cmd := exec.Command(w.jsPkger, "install")
+	cmd.Dir = w.projectDir
+
+	// install it
+	if err := cmd.Run(); err != nil {
+		w.installSpinner.Error("There was a problem while trying to install " + w.appConfig.name)
+		log.Fatal(err)
+	}
 }

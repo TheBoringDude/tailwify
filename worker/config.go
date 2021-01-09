@@ -6,7 +6,7 @@ type mainConfigApp struct {
 	name                  string
 	apptype               string
 	installer             []appInstaller
-	afterCreateInstall    []appNodeAfterInstall
+	afterCreateInstall    bool
 	requiredPackages      []string
 	modify                []appModifier
 	remove                []appFileRemover
@@ -24,7 +24,7 @@ type appInstaller struct {
 }
 
 // after the `create-`
-type appNodeAfterInstall struct {
+type appAfterInstall struct {
 	commandArgs []string
 }
 
@@ -70,7 +70,7 @@ func (w *Worker) newNextJs() *mainConfigApp {
 				pkgInstArgs:       []string{"create", "next-app"},
 			},
 		},
-		afterCreateInstall: []appNodeAfterInstall{},
+		afterCreateInstall: false,
 		requiredPackages:   []string{"tailwindcss@latest", "postcss@latest", "autoprefixer@latest"},
 		modify: []appModifier{
 			{
