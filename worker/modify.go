@@ -70,9 +70,10 @@ func (w *Worker) modify() {
 		}
 
 		// replace each set strings tp be replaced
-		var content string
+		// set it first to avoid not replacing the other strings set
+		var content = string(fileBytes)
 		for _, r := range i.Replacecontent {
-			content = strings.Replace(string(fileBytes), r.Textstring, r.Replacestring, 1)
+			content = strings.Replace(content, r.Textstring, r.Replacestring, 1)
 		}
 
 		// write files

@@ -18,4 +18,7 @@ var frameworks = map[string]frameworksConfig{
 	"vite-vue3": {
 		config: newViteApp(),
 	},
+	"react": {
+		config: newReactApp(),
+	},
 }
