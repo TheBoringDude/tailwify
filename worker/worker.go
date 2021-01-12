@@ -38,6 +38,9 @@ func (w *Worker) getPath() {
 
 // Start starts generating the template
 func (w *Worker) Start() {
+	// print ascii logo
+	fmt.Println(ASCIILogo)
+
 	// check if projectName is blank or not
 	if w.ProjectName == "" {
 		fmt.Println("\n  Please set a ProjectName by using the `-p` flag...")
