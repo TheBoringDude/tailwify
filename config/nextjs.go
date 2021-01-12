@@ -45,7 +45,7 @@ func newNextJs() *MainConfigApp {
 		Remove: []appFileRemover{
 			{
 				Folder: "styles",
-				Files:  []string{"Home.module.css", "globals.css"},
+				Files:  []string{"globals.css"},
 			},
 		},
 		Tailwindpath:          "styles/tailwind.css",
