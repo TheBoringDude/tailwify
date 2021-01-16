@@ -8,7 +8,7 @@ var projectName string
 
 // generateCmd represents the generate command
 var generateCmd = &cobra.Command{
-	Use:   "generate",
+	Use:   "gen",
 	Short: "Generate and setup a starter template",
 	Long: `It will configure a simple and starter app for you 
 with automatically configured TailwindCSS.`,

@@ -9,7 +9,7 @@ import (
 
 // viteVue3Cmd represents the viteVue3 command
 var viteVue3Cmd = &cobra.Command{
-	Use:   "viteVue3",
+	Use:   "vite-vue3",
 	Short: "Vue3 APP w/ Vite",
 	Long:  `Configure and setup a Vue3 APP with Vite`,
 	Run: func(cmd *cobra.Command, args []string) {
