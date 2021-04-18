@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/leaanthony/spinner"
-	"github.com/ootiq/tailwify/v1/utils"
+	"github.com/ootiq/tailwify/utils"
 )
 
 func (w *Worker) checkApps() {

@@ -7,7 +7,7 @@ import (
 	"path"
 
 	"github.com/leaanthony/spinner"
-	"github.com/ootiq/tailwify/v1/config"
+	"github.com/ootiq/tailwify/config"
 )
 
 // Worker => main handler for all apps

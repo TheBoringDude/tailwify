@@ -21,7 +21,7 @@ THE SOFTWARE.
 */
 package main
 
-import "github.com/ootiq/tailwify/v1/cmd"
+import "github.com/ootiq/tailwify/cmd"
 
 func main() {
 	cmd.Execute()

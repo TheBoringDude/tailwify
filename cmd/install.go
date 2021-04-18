@@ -6,7 +6,7 @@ import (
 	"os/exec"
 
 	"github.com/leaanthony/spinner"
-	"github.com/ootiq/tailwify/v1/config"
+	"github.com/ootiq/tailwify/config"
 	"github.com/spf13/cobra"
 )
 

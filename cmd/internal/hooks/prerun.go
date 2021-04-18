@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/leaanthony/spinner"
-	"github.com/ootiq/tailwify/v1/utils"
+	"github.com/ootiq/tailwify/utils"
 	"github.com/spf13/cobra"
 )
 
