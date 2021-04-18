@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/TheBoringDude/tailwify/v1/cmd/internal/hooks"
+	"github.com/ootiq/tailwify/v1/cmd/internal/hooks"
 	"github.com/spf13/cobra"
 )
 

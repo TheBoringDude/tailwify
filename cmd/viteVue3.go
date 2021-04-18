@@ -3,7 +3,7 @@ package cmd
 import (
 	"strings"
 
-	"github.com/TheBoringDude/tailwify/v1/worker"
+	"github.com/ootiq/tailwify/v1/worker"
 	"github.com/spf13/cobra"
 )
 

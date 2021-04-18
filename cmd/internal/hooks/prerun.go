@@ -3,8 +3,8 @@ package hooks
 import (
 	"os"
 
-	"github.com/TheBoringDude/tailwify/v1/utils"
 	"github.com/leaanthony/spinner"
+	"github.com/ootiq/tailwify/v1/utils"
 	"github.com/spf13/cobra"
 )
 

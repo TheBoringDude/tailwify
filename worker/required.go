@@ -5,8 +5,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/TheBoringDude/tailwify/v1/utils"
 	"github.com/leaanthony/spinner"
+	"github.com/ootiq/tailwify/v1/utils"
 )
 
 func (w *Worker) checkApps() {

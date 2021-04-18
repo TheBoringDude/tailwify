@@ -5,8 +5,8 @@ import (
 	"log"
 	"os/exec"
 
-	"github.com/TheBoringDude/tailwify/v1/config"
 	"github.com/leaanthony/spinner"
+	"github.com/ootiq/tailwify/v1/config"
 	"github.com/spf13/cobra"
 )
 
