@@ -10,29 +10,18 @@ import (
 // check for the main installer
 func (w *Worker) checkNodePackager() (string, []string) {
 	// check command
-	var nodePkger string
-	var nodePkgerCommand []string
-
-	// just loop in the package managers
-	for _, p := range w.appConfig.Installer {
-		if p.Pkgmanager == w.jsPkger {
-			nodePkger = p.Pkginstaller
-			nodePkgerCommand = p.Pkginstargs
-
-			break
-		}
-	}
+	appInstall := w.appConfig.Installer[w.jsPkger]
 
 	// if the package manager is not `npm` or `yarn`
 	// this will error if the code is modified
-	if nodePkger == "" {
+	if appInstall.Pkginstaller == "" {
 		log.Fatal("Error NODE Package Manager: " + w.jsPkger)
 	}
 
 	// append the project name to the args
-	newArgs := append(nodePkgerCommand, w.ProjectName)
+	newArgs := append(appInstall.Pkginstargs, w.ProjectName)
 
-	return nodePkger, newArgs
+	return appInstall.Pkginstaller, newArgs
 }
 
 // MAIN HANDLER FOR EVERYTHING

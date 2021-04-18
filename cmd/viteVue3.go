@@ -20,7 +20,7 @@ var viteVue3Cmd = &cobra.Command{
 		}
 
 		// generate
-		generate.Start()
+		generate.Start(UseNPM)
 	},
 }
 

@@ -6,9 +6,8 @@ func newGatsbyJs() *MainConfigApp {
 		ID:      "gatsby",
 		Name:    "GatsbyJS",
 		Apptype: "js",
-		Installer: []appInstaller{
-			{
-				Pkgmanager:        "npm",
+		Installer: map[string]appInstaller{
+			"npm": {
 				Pkgmanagercommand: []string{"install"},
 				Pkginstaller:      "gatsby",
 				Pkginstargs:       []string{"new"},

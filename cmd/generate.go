@@ -1,10 +1,31 @@
 package cmd
 
 import (
+	"github.com/TheBoringDude/tailwify/cmd/internal/hooks"
 	"github.com/spf13/cobra"
 )
 
 var projectName string
+
+// UseNPM gets if the user wants to use npm not yarn.
+var UseNPM bool
+
+// NodeApps is the main required apps for installing.
+var NodeApps = map[string]nodeAppCommand{
+	"node": {
+		Command: "node",
+	},
+	"npm": {
+		Command: "npm",
+	},
+	"yarn": {
+		Command: "yarn",
+	},
+}
+
+type nodeAppCommand struct {
+	Command string
+}
 
 // generateCmd represents the generate command
 var generateCmd = &cobra.Command{
@@ -12,19 +33,14 @@ var generateCmd = &cobra.Command{
 	Short: "Generate and setup a starter template",
 	Long: `It will configure a simple and starter app for you 
 with automatically configured TailwindCSS.`,
-	// Run: func(cmd *cobra.Command, args []string) {
-	// 	fmt.Println("generate called")
-	// },
+	PreRun: hooks.PreCheckNode,
 }
 
 func init() {
 	rootCmd.AddCommand(generateCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
 	generateCmd.PersistentFlags().StringVarP(&projectName, "project", "p", "", "Your projectname or directory (do not add spaces & do not use uppercase) (required)")
+	generateCmd.PersistentFlags().BoolVar(&UseNPM, "use-npm", false, "Use npm for installing (not applicable to others) [defaults: false]")
 	generateCmd.MarkFlagRequired("project")
 
 	// Cobra supports local flags which will only run when this command

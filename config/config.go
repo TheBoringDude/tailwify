@@ -6,7 +6,7 @@ type MainConfigApp struct {
 	ID                    string
 	Name                  string
 	Apptype               string
-	Installer             []appInstaller
+	Installer             map[string]appInstaller
 	Aftercreateinstall    bool
 	Requiredpackages      []string
 	Modify                []appModifier
@@ -18,7 +18,6 @@ type MainConfigApp struct {
 
 // for node package management
 type appInstaller struct {
-	Pkgmanager        string
 	Pkgmanagercommand []string
 	Pkginstaller      string
 	Pkginstargs       []string

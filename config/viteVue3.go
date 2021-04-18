@@ -6,15 +6,13 @@ func newViteApp() *MainConfigApp {
 		ID:      "vite-vue3",
 		Name:    "Vue3 w/ Vite",
 		Apptype: "js",
-		Installer: []appInstaller{
-			{
-				Pkgmanager:        "npm",
+		Installer: map[string]appInstaller{
+			"npm": {
 				Pkgmanagercommand: []string{"install"},
 				Pkginstaller:      "npx",
 				Pkginstargs:       []string{"create-vite-app"},
 			},
-			{
-				Pkgmanager:        "yarn",
+			"yarn": {
 				Pkgmanagercommand: []string{"add"},
 				Pkginstaller:      "yarn",
 				Pkginstargs:       []string{"create", "vite-app"},

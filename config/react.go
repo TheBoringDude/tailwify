@@ -6,15 +6,13 @@ func newReactApp() *MainConfigApp {
 		ID:      "react",
 		Name:    "React",
 		Apptype: "js",
-		Installer: []appInstaller{
-			{
-				Pkgmanager:        "npm",
+		Installer: map[string]appInstaller{
+			"npm": {
 				Pkgmanagercommand: []string{"install"},
 				Pkginstaller:      "npx",
 				Pkginstargs:       []string{"create-react-app"},
 			},
-			{
-				Pkgmanager:        "yarn",
+			"yarn": {
 				Pkgmanagercommand: []string{"add"},
 				Pkginstaller:      "yarn",
 				Pkginstargs:       []string{"create", "react-app"},

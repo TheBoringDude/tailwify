@@ -20,7 +20,7 @@ var reactCmd = &cobra.Command{
 		}
 
 		// generate
-		generate.Start()
+		generate.Start(UseNPM)
 	},
 }
 

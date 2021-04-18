@@ -37,7 +37,7 @@ func (w *Worker) getPath() {
 }
 
 // Start starts generating the template
-func (w *Worker) Start() {
+func (w *Worker) Start(useNpm bool) {
 	// print ascii logo
 	fmt.Println(ASCIILogo)
 
@@ -49,6 +49,12 @@ func (w *Worker) Start() {
 
 	// set first the paths
 	w.getPath()
+
+	// identify which package manager to use
+	w.jsPkger = "yarn"
+	if useNpm || w.AppType == "gatsby" {
+		w.jsPkger = "npm"
+	}
 
 	// then, check for the required apps
 	w.checkApps()

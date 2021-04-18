@@ -9,20 +9,7 @@ import (
 
 // argument generator and handler / fixer
 func (w *Worker) tailwindNodeArgs() []string {
-	var nodePkgerCommand []string
-
-	// just loop in the package managers
-	for _, p := range w.appConfig.Installer {
-		if p.Pkgmanager == w.jsPkger {
-			nodePkgerCommand = p.Pkgmanagercommand
-
-			break
-		}
-	}
-
-	newArgs := append(nodePkgerCommand, w.appConfig.Requiredpackages...)
-
-	return newArgs
+	return append(w.appConfig.Installer[w.jsPkger].Pkgmanagercommand, w.appConfig.Requiredpackages...)
 }
 
 // main tailwindcss installer
