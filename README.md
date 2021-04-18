@@ -15,7 +15,7 @@ I am a fan of Tailwind but then I am too lazy in configuring it again in another
 
 ## Install
 ```
-go install github.com/TheBoringDude/tailwify/v1
+go install github.com/ootiq/tailwify/v1
 ```
 
 ## What it does?
