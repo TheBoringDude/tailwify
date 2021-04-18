@@ -21,7 +21,7 @@ THE SOFTWARE.
 */
 package main
 
-import "github.com/TheBoringDude/tailwify/cmd"
+import "github.com/TheBoringDude/tailwify/v1/cmd"
 
 func main() {
 	cmd.Execute()

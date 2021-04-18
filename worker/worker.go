@@ -6,7 +6,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/TheBoringDude/tailwify/config"
+	"github.com/TheBoringDude/tailwify/v1/config"
 	"github.com/leaanthony/spinner"
 )
 

@@ -1,4 +1,4 @@
-module github.com/TheBoringDude/tailwify
+module github.com/TheBoringDude/tailwify/v1
 
 go 1.15
 
