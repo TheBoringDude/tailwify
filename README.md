@@ -15,7 +15,7 @@ I am a fan of Tailwind but then I am too lazy in configuring it again in another
 
 ## Install
 ```
-go get -u github.com/TheBoringDude/tailwify
+go install github.com/TheBoringDude/tailwify/v1
 ```
 
 ## What it does?
@@ -35,7 +35,7 @@ Nothing fancy, just the following, ..
 # framework could be (next/gatsby/viteVue3/react)
 # project-name should be in lowercase and kebab or snake-case
 # camelCase projectName will be converted to lowercase
-tailwify generate {framework} -p {project-name}
+tailwify gen {framework} -p {project-name}
 ```
 
 #### Installations and configurations are based from the official docs: https://tailwindcss.com/docs/installation
