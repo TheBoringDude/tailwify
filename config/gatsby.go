@@ -29,14 +29,14 @@ func newGatsbyJs() *MainConfigApp {
 				Filename: "gatsby-config.js",
 				Replacecontent: []modifyReplace{
 					{
-						Textstring:    "plugins: [],",
-						Replacestring: "plugins: ['gatsby-plugin-postcss'],",
+						Textstring:    "`gatsby-plugin-gatsby-cloud`,",
+						Replacestring: "`gatsby-plugin-gatsby-cloud`,\n    `gatsby-plugin-postcss`",
 					},
 				},
 			},
 		},
 		Remove:                []appFileRemover{},
-		Tailwindpath:          "src/styles/tailwind.css",
+		Tailwindpath:          "src/styles/global.css",
 		Tailwindconfiginstall: []string{"tailwindcss", "init", "-p"},
 		Otherfiles: []additionalFiles{
 			{
