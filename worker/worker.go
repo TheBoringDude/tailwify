@@ -47,6 +47,9 @@ func (w *Worker) Start(useNpm bool) {
 		os.Exit(0)
 	}
 
+	// show project name
+	fmt.Printf("Project: \033[32;1m%s\033[0m \n\n", w.ProjectName)
+
 	// set first the paths
 	w.getPath()
 
